@@ -7,7 +7,7 @@
 
   try {
     var SPEED_KEY = "evercraft-speed-multiplier";
-    var DEFAULT_MULTIPLIER = 5;
+    var DEFAULT_MULTIPLIER = 10;
     var MIN_MULTIPLIER = 1;
     var MAX_MULTIPLIER = 20;
 

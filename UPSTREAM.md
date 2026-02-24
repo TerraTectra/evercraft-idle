@@ -18,6 +18,7 @@
 | --- | --- | --- | --- |
 | 2026-02-24 | `db90982` | `ru-v1.0.0+upstream-db90982` | Initial RU overlay release. No minified gameplay bundle patching. |
 | 2026-02-24 | `db90982` | `main` (post-release update) | Added non-invasive `speed.js` global multiplier layer (`x5` default). No minified gameplay bundle patching. |
+| 2026-02-24 | `db90982` | `main` (speed tune) | Changed `speed.js` default multiplier from `x5` to `x10`. No minified gameplay bundle patching. |
 
 ## Branching Strategy
 

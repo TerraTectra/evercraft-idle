@@ -38,7 +38,7 @@ location.reload();
 
 ## Global Speed Multiplier
 
-- Default speed multiplier in this fork: `x5`.
+- Default speed multiplier in this fork: `x10`.
 - Stored in `localStorage` key: `evercraft-speed-multiplier`.
 - Applied as a non-invasive runtime time-scale layer (no gameplay bundle patching).
 - Affects active and offline time-based progression.
@@ -52,7 +52,7 @@ window.evercraftSpeed.getMultiplier();
 Set multiplier and reload:
 
 ```js
-window.evercraftSpeed.setMultiplier(5);
+window.evercraftSpeed.setMultiplier(10);
 ```
 
 Emergency reset to normal speed (`x1`):
@@ -77,7 +77,7 @@ window.evercraftSpeed.debugSnapshot();
 If speed is not noticeable, force x5 and reload:
 
 ```js
-localStorage.setItem("evercraft-speed-multiplier", "5");
+localStorage.setItem("evercraft-speed-multiplier", "10");
 location.reload();
 ```
 
