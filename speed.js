@@ -17,6 +17,18 @@
       perfObj && typeof perfObj.now === "function"
         ? perfObj.now.bind(perfObj)
         : null;
+    var realSetTimeout =
+      typeof window.setTimeout === "function"
+        ? window.setTimeout.bind(window)
+        : null;
+    var realSetInterval =
+      typeof window.setInterval === "function"
+        ? window.setInterval.bind(window)
+        : null;
+    var realRequestAnimationFrame =
+      typeof window.requestAnimationFrame === "function"
+        ? window.requestAnimationFrame.bind(window)
+        : null;
 
     function safeGetStorage(key) {
       try {
@@ -76,6 +88,15 @@
       return anchorScaledPerf + (realNow - anchorRealPerf) * multiplier;
     }
 
+    function scaleDelay(timeout) {
+      var n = Number(timeout);
+      if (!Number.isFinite(n) || n < 0) {
+        n = 0;
+      }
+      var scaled = n / (multiplier > 0 ? multiplier : 1);
+      return scaled < 0 ? 0 : scaled;
+    }
+
     function applyMultiplier(nextMultiplier) {
       var normalized = clampMultiplier(nextMultiplier, multiplier);
       var nowRealDate = realDateNow();
@@ -126,6 +147,42 @@
       }
     }
 
+    if (realSetTimeout) {
+      window.setTimeout = function (handler, timeout) {
+        var args = Array.prototype.slice.call(arguments, 2);
+        var scaledTimeout = scaleDelay(timeout);
+        return realSetTimeout.apply(window, [handler, scaledTimeout].concat(args));
+      };
+    }
+
+    if (realSetInterval) {
+      window.setInterval = function (handler, timeout) {
+        var args = Array.prototype.slice.call(arguments, 2);
+        var scaledTimeout = scaleDelay(timeout);
+        return realSetInterval.apply(window, [handler, scaledTimeout].concat(args));
+      };
+    }
+
+    if (realRequestAnimationFrame) {
+      window.requestAnimationFrame = function (callback) {
+        if (typeof callback !== "function") {
+          return realRequestAnimationFrame(callback);
+        }
+        return realRequestAnimationFrame(function (timestamp) {
+          var realTs =
+            typeof timestamp === "number"
+              ? timestamp
+              : realPerfNow
+                ? realPerfNow()
+                : realDateNow();
+          var scaledTs = realPerfNow
+            ? getScaledPerfNow(realTs)
+            : getScaledDateNow(realTs);
+          return callback(scaledTs);
+        });
+      };
+    }
+
     window.__EVERCRAFT_SPEED_MULTIPLIER__ = multiplier;
     window.evercraftSpeed = {
       getMultiplier: function () {
@@ -144,6 +201,14 @@
           window.location.reload();
         }
         return applied;
+      },
+      debugSnapshot: function () {
+        return {
+          multiplier: multiplier,
+          stored: safeGetStorage(SPEED_KEY),
+          scaledDateNow: Date.now(),
+          scaledPerfNow: realPerfNow ? perfObj.now() : null
+        };
       }
     };
 
@@ -161,4 +226,3 @@
     }
   }
 })();
-

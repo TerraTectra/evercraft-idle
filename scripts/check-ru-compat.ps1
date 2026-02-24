@@ -71,9 +71,13 @@ if (Test-Path $speedPath) {
 
 $speedKeyRegex = 'evercraft-speed-multiplier'
 $speedApiRegex = 'window\.evercraftSpeed'
+$speedTimerRegex = 'window\.setInterval'
+$speedRafRegex = 'window\.requestAnimationFrame'
 
 Write-Check ([regex]::IsMatch($speedContent, $speedKeyRegex, "IgnoreCase")) "speed.js contains speed storage key" "speed.js missing speed storage key"
 Write-Check ([regex]::IsMatch($speedContent, $speedApiRegex, "IgnoreCase")) "speed.js exposes console control API" "speed.js missing console control API"
+Write-Check ([regex]::IsMatch($speedContent, $speedTimerRegex, "IgnoreCase")) "speed.js scales timer APIs" "speed.js missing timer scaling overrides"
+Write-Check ([regex]::IsMatch($speedContent, $speedRafRegex, "IgnoreCase")) "speed.js scales RAF timestamp flow" "speed.js missing RAF scaling override"
 
 if ($allPassed) {
     Write-Output "PASS: RU compatibility structure OK"

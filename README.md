@@ -68,6 +68,19 @@ localStorage.setItem("evercraft-speed-multiplier", "1");
 location.reload();
 ```
 
+Quick verification:
+
+```js
+window.evercraftSpeed.debugSnapshot();
+```
+
+If speed is not noticeable, force x5 and reload:
+
+```js
+localStorage.setItem("evercraft-speed-multiplier", "5");
+location.reload();
+```
+
 ## Developer Mode: Untranslated String Logging
 
 Use developer-only logging to collect missing translations in console.
