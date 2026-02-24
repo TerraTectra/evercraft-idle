@@ -15,6 +15,16 @@
   - no gameplay bundle patching
   - gameplay mechanics/storage logic unchanged.
 
+## Update: Global Speed Multiplier
+
+- Added non-invasive global time multiplier bootstrap (`speed.js`), loaded before the gameplay bundle.
+- Default multiplier: `x5` (stored in `localStorage["evercraft-speed-multiplier"]`).
+- Runtime controls are available via browser console:
+  - `window.evercraftSpeed.getMultiplier()`
+  - `window.evercraftSpeed.setMultiplier(value)`
+  - `window.evercraftSpeed.reset()` for `x1`.
+- Gameplay bundle (`index-*.js`) remains unmodified.
+
 ## Save Migration Note
 
 - Saves are browser origin-scoped (`localStorage`).
@@ -33,4 +43,3 @@
 ## Known Limitation
 
 - Late-game/deep-progression text may still require incremental RU coverage updates as more states are reached.
-

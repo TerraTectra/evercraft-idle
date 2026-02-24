@@ -36,6 +36,38 @@ localStorage.setItem("evercraft-locale", "ru");
 location.reload();
 ```
 
+## Global Speed Multiplier
+
+- Default speed multiplier in this fork: `x5`.
+- Stored in `localStorage` key: `evercraft-speed-multiplier`.
+- Applied as a non-invasive runtime time-scale layer (no gameplay bundle patching).
+- Affects active and offline time-based progression.
+
+Check current multiplier:
+
+```js
+window.evercraftSpeed.getMultiplier();
+```
+
+Set multiplier and reload:
+
+```js
+window.evercraftSpeed.setMultiplier(5);
+```
+
+Emergency reset to normal speed (`x1`):
+
+```js
+window.evercraftSpeed.reset();
+```
+
+Manual storage fallback:
+
+```js
+localStorage.setItem("evercraft-speed-multiplier", "1");
+location.reload();
+```
+
 ## Developer Mode: Untranslated String Logging
 
 Use developer-only logging to collect missing translations in console.
