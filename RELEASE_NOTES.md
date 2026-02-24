@@ -18,7 +18,7 @@
 ## Update: Global Speed Multiplier
 
 - Added non-invasive global time multiplier bootstrap (`speed.js`), loaded before the gameplay bundle.
-- Default multiplier: `x10` (stored in `localStorage["evercraft-speed-multiplier"]`).
+- Default multiplier: `x20` (stored in `localStorage["evercraft-speed-multiplier"]`).
 - Time scaling now covers `Date.now`, `performance.now`, `setTimeout`/`setInterval`, and `requestAnimationFrame` timestamp flow.
 - Runtime controls are available via browser console:
   - `window.evercraftSpeed.getMultiplier()`
